@@ -1,0 +1,14 @@
+{
+    "name": "carousel",
+    "title": "carousel",
+    "version": "2.1",
+    "author": "Intel",
+    "pending": false,
+    "license": "MIT",
+    "description": "A carousel plugin for App Framework apps.",
+    "categories": [
+
+    ],
+    "homepage": "https://github.com/01org/af-carousel",
+    "githubLink": "https://github.com/01org/af-carousel"
+}
