@@ -364,8 +364,8 @@
                 var childrenCounter = 0;
                 var that = this;
                 var el = this.el;
-                $(el).children().find(".prevBuffer").remove();
-                $(el).children().find(".nextBuffer").remove();
+                $(el).find(".prevBuffer").remove();
+                $(el).find(".nextBuffer").remove();
                 n = el.childNodes[0];
                 var widthParam;
                 var heightParam = "100%";
@@ -377,107 +377,112 @@
                         childrenCounter++;
                     }
                 }
-                //Let's put the buffers at the start/end
-                if(this.wrap){
-                    var prep=$(elems[elems.length-1]).clone().get(0);
-                    $(el).prepend(prep);
-                    var tmp=$(elems[0]).clone().get(0);
-                    $(el).append(tmp);
-                    elems.push(tmp);
-                    elems.unshift(prep);
-                    tmp.style.position="absolute";
-                    prep.style.position="absolute";
-                }
 
-                var param = (100 / childrenCounter) + "%";
-                this.childrenCount = childrenCounter;
-                widthParam = parseFloat(100 / childrenCounter) + "%";
-
-                for (var i = 0; i < elems.length; i++) {
-                    if (this.horizontal) {
-                        elems[i].style.width = widthParam;
-                        elems[i].style.height = "100%";
-                        elems[i].style['float']="left";
-                    }
-                    else {
-                        elems[i].style.height = widthParam;
-                        elems[i].style.width = "100%";
-                        elems[i].style.display = "block";
-                    }
-                }
-                //Clone the first and put it at the end
+                //Only do this if content actually exists
+                if(elems.length > 0) {
                 
-
-                this.moveCSS3(el, {
-                    x: 0,
-                    y: 0
-                });
-                if (this.horizontal) {
-                    el.style.width = Math.ceil((this.childrenCount) * 100) + "%";
-                    el.style.height = "100%";
-                    el.style['min-height'] = "100%"
+                    //Let's put the buffers at the start/end
                     if(this.wrap){
-                        prep.style.left="-"+widthParam;
-                        tmp.style.left="100%";
+                        var prep=$(elems[elems.length-1]).clone().get(0);
+                        $(el).prepend(prep);
+                        var tmp=$(elems[0]).clone().get(0);
+                        $(el).append(tmp);
+                        elems.push(tmp);
+                        elems.unshift(prep);
+                        tmp.style.position="absolute";
+                        prep.style.position="absolute";
+                        tmp.className = "nextBuffer";
+                        prep.className = "prevBuffer";
                     }
-                }
-                else {
-                    el.style.width = "100%";
-                    el.style.height = Math.ceil((this.childrenCount) * 100) + "%";
-                    el.style['min-height'] = Math.ceil((this.childrenCount) * 100) + "%";
-                    if(this.wrap){
-                        prep.style.top="-"+widthParam;
-                        tmp.style.top="100%";
-                    }
-                }
-                // Create the paging dots
-                if (this.pagingDiv) {
-                    this.pagingDiv.innerHTML = ""
-                    for (i = 0; i < this.childrenCount; i++) {
 
-                        var pagingEl = document.createElement("div");
-                        pagingEl.id = this.container.id + "_" + i;
-                        pagingEl.pageId = i;
-                        if (i !== this.carouselIndex) {
-                            pagingEl.className = this.pagingCssName;
+                    var param = (100 / childrenCounter) + "%";
+                    this.childrenCount = childrenCounter;
+                    widthParam = parseFloat(100 / childrenCounter) + "%";
+
+                    for (var i = 0; i < elems.length; i++) {
+                        if (this.horizontal) {
+                            elems[i].style.width = widthParam;
+                            elems[i].style.height = "100%";
+                            elems[i].style['float']="left";
                         }
                         else {
-                            pagingEl.className = this.pagingCssNameSelected;
+                            elems[i].style.height = widthParam;
+                            elems[i].style.width = "100%";
+                            elems[i].style.display = "block";
                         }
-                        pagingEl.onclick = function() {
-                            that.onMoveIndex(this.pageId);
-                        };
-                        var spacerEl = document.createElement("div");
-
-                        spacerEl.style.width = "20px";
-                        if(this.horizontal){
-                            spacerEl.style.display = "inline-block";
-                            spacerEl.innerHTML = "&nbsp;";
-                        }
-                        else{
-                           spacerEl.innerHTML="&nbsp;";
-                           spacerEl.style.display="block";
-                        }
-
-                        this.pagingDiv.appendChild(pagingEl);
-                        if (i + 1 < (this.childrenCount))
-                            this.pagingDiv.appendChild(spacerEl);
-                        pagingEl = null;
-                        spacerEl = null;
                     }
-                    if(this.horizontal){
-                        this.pagingDiv.style.width = (this.childrenCount) * 50 + "px";
-                        this.pagingDiv.style.height = "25px";
+                    //Clone the first and put it at the end
+                    
+
+                    this.moveCSS3(el, {
+                        x: 0,
+                        y: 0
+                    });
+                    if (this.horizontal) {
+                        el.style.width = Math.ceil((this.childrenCount) * 100) + "%";
+                        el.style.height = "100%";
+                        el.style['min-height'] = "100%"
+                        if(this.wrap){
+                            prep.style.left="-"+widthParam;
+                            tmp.style.left="100%";
+                        }
                     }
                     else {
-                        this.pagingDiv.style.height = (this.childrenCount) * 50 + "px";
-                        this.pagingDiv.style.width = "25px";
+                        el.style.width = "100%";
+                        el.style.height = Math.ceil((this.childrenCount) * 100) + "%";
+                        el.style['min-height'] = Math.ceil((this.childrenCount) * 100) + "%";
+                        if(this.wrap){
+                            prep.style.top="-"+widthParam;
+                            tmp.style.top="100%";
+                        }
                     }
+                    // Create the paging dots
+                    if (this.pagingDiv) {
+                        this.pagingDiv.innerHTML = ""
+                        for (i = 0; i < this.childrenCount; i++) {
+
+                            var pagingEl = document.createElement("div");
+                            pagingEl.id = this.container.id + "_" + i;
+                            pagingEl.pageId = i;
+                            if (i !== this.carouselIndex) {
+                                pagingEl.className = this.pagingCssName;
+                            }
+                            else {
+                                pagingEl.className = this.pagingCssNameSelected;
+                            }
+                            pagingEl.onclick = function() {
+                                that.onMoveIndex(this.pageId);
+                            };
+                            var spacerEl = document.createElement("div");
+
+                            spacerEl.style.width = "20px";
+                            if(this.horizontal){
+                                spacerEl.style.display = "inline-block";
+                                spacerEl.innerHTML = "&nbsp;";
+                            }
+                            else{
+                               spacerEl.innerHTML="&nbsp;";
+                               spacerEl.style.display="block";
+                            }
+
+                            this.pagingDiv.appendChild(pagingEl);
+                            if (i + 1 < (this.childrenCount))
+                                this.pagingDiv.appendChild(spacerEl);
+                            pagingEl = null;
+                            spacerEl = null;
+                        }
+                        if(this.horizontal){
+                            this.pagingDiv.style.width = (this.childrenCount) * 50 + "px";
+                            this.pagingDiv.style.height = "25px";
+                        }
+                        else {
+                            this.pagingDiv.style.height = (this.childrenCount) * 50 + "px";
+                            this.pagingDiv.style.width = "25px";
+                        }
+                    }
+                    this.onMoveIndex(this.carouselIndex);
                 }
-                this.onMoveIndex(this.carouselIndex);
-
             }
-
         };
         return carousel;
     })();
