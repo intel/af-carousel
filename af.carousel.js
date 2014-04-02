@@ -8,7 +8,7 @@
     var objId=function(obj){
         if(!obj.afmCarouselId) obj.afmCarouselId=$.uuid();
         return obj.afmCarouselId;
-    }
+    };
     $.fn.carousel = function(opts) {
         var tmp, id;
         for (var i = 0; i < this.length; i++) {
@@ -50,53 +50,53 @@
             }
 
 
-                var that = this;
-                af(this.container).bind('destroy', function(e){
-                    var id = that.container.afmCarouselId;
-                    //window event need to be cleaned up manually, remaining binds are automatically killed in the dom cleanup process
-                   window.removeEventListener("orientationchange", that.orientationHandler, false);
-                   if(cache[id]) delete cache[id];
-                   e.stopPropagation();
-                });
+            var that = this;
+            af(this.container).bind('destroy', function(e){
+                var id = that.container.afmCarouselId;
+                //window event need to be cleaned up manually, remaining binds are automatically killed in the dom cleanup process
+               window.removeEventListener("orientationchange", that.orientationHandler, false);
+               if(cache[id]) delete cache[id];
+               e.stopPropagation();
+            });
 
-                this.pagingDiv = this.pagingDiv ? document.getElementById(this.pagingDiv) : null;
+            this.pagingDiv = this.pagingDiv ? document.getElementById(this.pagingDiv) : null;
 
 
-                // initial setup
-                this.container.style.overflow = "hidden";
-                if (this.vertical) {
-                    this.horizontal = false;
-                }
+            // initial setup
+            this.container.style.overflow = "hidden";
+            if (this.vertical) {
+                this.horizontal = false;
+            }
 
-                var el = document.createElement("div");
-                this.container.appendChild(el);
-                var $el=$(el);
-                var $container=$(this.container);
-                var data = Array.prototype.slice.call(this.container.childNodes);
-                while(data.length>0)
-                {
-                    var myEl=data.splice(0,1);
-                    myEl=$container.find(myEl);
-                    if(myEl.get()==el)
-                       continue;
-                    $el.append(myEl.get());
-                }
-                if (this.horizontal) {
-                    el.style.display = "block";
-                    el.style['float']="left";
-                }
-                else {
-                    el.style.display = "block";
-                }
+            var el = document.createElement("div");
+            this.container.appendChild(el);
+            var $el=$(el);
+            var $container=$(this.container);
+            var data = Array.prototype.slice.call(this.container.childNodes);
+            while(data.length>0)
+            {
+                var myEl=data.splice(0,1);
+                myEl=$container.find(myEl);
+                if(myEl.get(0)===el)
+                   continue;
+                $el.append(myEl.get(0));
+            }
+            if (this.horizontal) {
+                el.style.display = "block";
+                el.style['float']="left";
+            }
+            else {
+                el.style.display = "block";
+            }
 
-                this.el = el;
-                this.refreshItems();
-                var afEl = af(el);
-                afEl.bind('touchmove', function(e) {that.touchMove(e);});
-                afEl.bind('touchend', function(e) {that.touchEnd(e);});
-                afEl.bind('touchstart', function(e) {that.touchStart(e);});
-                this.orientationHandler = function() {that.onMoveIndex(that.carouselIndex,0);};
-                window.addEventListener("orientationchange", this.orientationHandler, false);
+            this.el = el;
+            this.refreshItems();
+            var afEl = af(el);
+            afEl.bind('touchmove', function(e) {that.touchMove(e);});
+            afEl.bind('touchend', function(e) {that.touchEnd(e);});
+            afEl.bind('touchstart', function(e) {that.touchStart(e);});
+            this.orientationHandler = function() {that.onMoveIndex(that.carouselIndex,0);};
+            window.addEventListener("orientationchange", this.orientationHandler, false);
 
         };
 

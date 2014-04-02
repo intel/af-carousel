@@ -2,8 +2,7 @@
     "name": "carousel",
     "title": "carousel",
     "version": "2.1",
-    "author": "Intel",
-    "pending": false,
+    "author": "Ian Maffett <ian.maffett@intel.com>",
     "license": "MIT",
     "description": "A carousel plugin for App Framework apps.",
     "categories": [
