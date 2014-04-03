@@ -9,8 +9,8 @@ To use af.carousel you must do the following
 
 ``` html
 <div id="my_div" style="width:768px;height:400px;overflow:hidden">
-   <div style="float:left;width:766px;height:400;border:1px solid white;background:yellow;"></div>
-   <div style="float:left;width:766px;height:400;border:1px solid white;background:green;"></div>
+   <div style="float:left;width:766px;height:400px;border:1px solid white;background:yellow;"></div>
+   <div style="float:left;width:766px;height:400px;border:1px solid white;background:green;"></div>
 </div>
 ```
 
